@@ -4,8 +4,8 @@ clear
 
 %% SETUP
 
-numPoints = 5;
-rulerValues = [10 14 18 22 26];
+numPoints = 9;
+rulerValues = [8 10 12 14 18 22 24 26 28];
 
 originValue = 18;          % Physical value chosen as xC
 

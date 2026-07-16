@@ -62,5 +62,5 @@ grid on
 fprintf("Weight = %.6f * theta + %.6f\n", ...
     fit(1), fit(2));
 
-fprintf("\nSpring calibration coefficients (dyn*cm/rad):\n");
+fprintf("\nSpring calibration coefficients (dyn*cm):\n");
 fprintf("%.6f\n", fit(1));
