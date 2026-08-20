@@ -1,6 +1,6 @@
 clc; clear; clf; close all;
 
-trialCount = 3;
+trialCount = 1;
 file = "1500f";
 
 dt = 0.03366666;

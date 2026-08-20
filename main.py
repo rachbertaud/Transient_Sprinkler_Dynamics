@@ -52,7 +52,8 @@ trial = 1
 
 # define where data is stored on local machine
 data_dir = "/Users/rachelbertaud/code/Sprinkler/Transient_Dynamics/Sprinkler_Data/"
-
+data_dir = "C:/Users/gabreu/Desktop/Transient_Dynamics/Sprinkler_Data/"
+data_dir = "C:\\Users\\gabreu\\Desktop\\Transient_Sprinkler_Dynamics\\Sprinkler_Data"
 lowpass_switch = 1
 
 # DEFINE DEPENDENCIES AND UDFs
