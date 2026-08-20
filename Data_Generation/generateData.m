@@ -4,9 +4,7 @@ clf
 close all 
 clear
 
-D = 50; % Fixed Distance from Camera to mirror at shortest point
-xC = 40000; % x position on ruler at shortest point (point where D is measured)
-    % xC is in inches and must match the calibration-defined ruler units.
+D = 48.5; % Fixed Distance from Camera to mirror at shortest point
 saveData = true;
 
 overlayVideo = true;  % Save the overlayed video
@@ -14,49 +12,23 @@ overlayVideo = true;  % Save the overlayed video
 circleRadius = 8;  
 circleThickness = 2;
 
+trialCount = 1;
 
-for trial = [1, ]
+for trial = 1:1:trialCount
     file = "1500f" + int2str(trial);
     
-    %% GET FRAMES
-    
+    % Get movie data
     mov_name = file + ".mov";
     
     if ~isfile(mov_name)
         error(mov_name + " is not in working directory. Please move move or code to working directory!")
     end
-    
+
     % create video reader object for reading the video files
     v = VideoReader(mov_name); 
     fps = v.FrameRate;
     dt = 1/fps; % Time step size
     
-%%%%%%%%%%%%%%%%%%%%%%% I M P O R T A N T %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% THE FOLLOWING MAKES FRAME DIRECTORIES AND FRAMES
-% This only needs to be done once on your personal device. It is necessary
-% for this code to run to have frames. By uncommenting below, you will make
-% frames for trail as it runs. This process takes time.
-
-% Simply uncomment lines 31 through 45 to make directories and run code as
-% normal. 
-
- 
-    % saveFolder = file + "_frames/";
-    
-    % if ~isfolder(saveFolder)
-    %     mkdir(saveFolder);
-    % end
-    
-    % i = 1;
-    
-    % while hasFrame(v)
-    %     img = readFrame(v);
-    %     filename = sprintf("%03d",i)+".jpg";
-    %     fullname = file + "_frames/" + filename;
-    %     imwrite(img,fullname)    % Write to a JPEG file (001.jpg, 002.jpg, ..., 121.jpg)
-    %     i = i+1;
-    % end
-
     %% Calibration
     calibrationFile = file + "_rulerCalibration.mat";
 
@@ -66,6 +38,7 @@ for trial = [1, ]
 
     calibrationData = load(calibrationFile, "rulerCalibration");
     rulerCalibration = calibrationData.rulerCalibration;
+    xC = rulerCalibration.originValue;   % 18 inches
   
     %% READ, MASK, NAD EXTRACT DATA
 
@@ -121,8 +94,8 @@ for trial = [1, ]
             xMid = NaN;
             yMid = NaN;
         else
-            xMid = round(mean(laserCols, 'Weights', laserWeights));
-            yMid = round(mean(laserRows, 'Weights', laserWeights));
+            xMid = mean(laserCols, 'Weights', laserWeights);
+            yMid = mean(laserRows, 'Weights', laserWeights);
         end
 
         rulerInches = projectToRulerAxis([xMid, yMid], rulerCalibration);
@@ -205,7 +178,7 @@ for trial = [1, ]
     % Convert ruler coordinates in inches to degrees.
     tan1 = atan2((position - xC), D);
     tan2 = atan2((x0 - xC), D);
-    theta_all = 0.5*(tan1 - tan2)*180/pi; % For whole run
+    theta_all = 0.5*(tan1 - tan2)*180/pi; % convert to degrees
 
 
     if saveData
