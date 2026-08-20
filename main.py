@@ -56,6 +56,9 @@ data_dir = "C:/Users/gabreu/Desktop/Transient_Dynamics/Sprinkler_Data/"
 data_dir = "C:\\Users\\gabreu\\Desktop\\Transient_Sprinkler_Dynamics\\Sprinkler_Data"
 lowpass_switch = 1
 
+# Spring constant in dyn cm/rad
+K = 32102.99
+
 # DEFINE DEPENDENCIES AND UDFs
 import os
 import matplotlib.pyplot as plt
@@ -190,7 +193,7 @@ franken_t, franken_y, t_end = combine_data(full_t, full_y, idexComb, phi_an, pro
 # SECTION FOUR - FOURIER TRANSFORM
 ###################################################################################################
 
-N_f = 2*2048
+N_f = len(franken_y)
 L = franken_t[-1] - franken_t[0]
 h = L/N_f
 
